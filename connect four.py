@@ -84,7 +84,33 @@ class Board:
         for line in self.dict_board.keys(): #This for loop prints the dict_board line by line
             print(self.dict_board[line])
 
-g = Board()
+#g = Board()
 
-g.make_a_move(2, 'O')
-g.printBoard()
+#g.make_a_move(2, 'O')
+#g.printBoard()
+
+class User:
+    def __init__(self, fist_name, last_name, age, color):
+        self.fist_name = fist_name
+        self.last_name = last_name
+        self.age = age
+        self.color = color
+
+
+
+if __name__ == "__main__":
+    is_game_over = False
+    count_turns = 0
+    while is_game_over == False:
+        ### ask for user input
+        count_turns +=1
+        
+
+
+    while is_game_over == False:
+        ### Game dynamics 
+        count_turns +=1
+        
+        # remove below
+        if count_turns == 5:
+            is_game_over = True
