@@ -1,45 +1,40 @@
-dict_moves = {'line1': {'a' : ' ','b' : ' ','c' : ' ','d' : ' ','e' : ' ','f' : ' ','g' : ' '}, #Dictionary that contains the value inside each one of the boxes
-'line2': {'a' : ' ','b' : ' ','c' : ' ','d' : ' ','e' : ' ','f' : ' ','g' : ' '}, #Inside the dictionary, every dictionary contains the values saved inside the line
-'line3': {'a' : ' ','b' : ' ','c' : ' ','d' : ' ','e' : ' ','f' : ' ','g' : ' '},
-'line4': {'a' : ' ','b' : ' ','c' : ' ','d' : ' ','e' : ' ','f' : ' ','g' : ' '},
-'line5': {'a' : ' ','b' : ' ','c' : ' ','d' : ' ','e' : ' ','f' : ' ','g' : ' '},
-'line6': {'a' : ' ','b' : ' ','c' : ' ','d' : ' ','e' : ' ','f' : ' ','g' : ' '},
-'line7': {'a' : ' ','b' : ' ','c' : ' ','d' : ' ','e' : ' ','f' : ' ','g' : ' '}
-}
+class Board:
 
-dict_board ={'roof' : '_______________', #Dicionary that contains the graphical output of the moves
-'line1' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line1'].values())), #Each line is formatted with the values contained in the dict_moves dictionary
-'line2' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line2'].values())),
-'line3' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line3'].values())),
-'line4' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line4'].values())),
-'line5' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line5'].values())),
-'line6' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line6'].values())),
-'line7' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line7'].values())),
-'bottom' : '¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯'}
+    def __init__(self): #When the Board class is initialized the dictionary containing the moves is empty
+        
+        self.dict_moves = {1 : {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '}, #Dictionary that contains the value inside each one of the boxes
+        2 : {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '}, #Inside the dictionary, every dictionary contains the values saved inside the line
+        3 : {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '},
+        4 : {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '},
+        5: {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '},
+        6: {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '},
+        7: {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '}
+        }
 
-for line in dict_board.keys(): #This for loop prints the dict_board line by line
-    print(dict_board[line])
-
-lines_list = [ 'line7', 'line6', 'line5', 'line4', 'line3', 'line2', 'line1'] #List containing the lines of the dict_moves in order to check them from lower to higher
-
-player = 'O' #Placeholer, until we develop the 'makeMove' function
-column = 'e'
-
-for line in lines_list: #This for loop checks the lines starting from the bottom one and places the player sign the the lowest  empty one
-    if dict_moves[line][column] == ' ':
-        dict_moves[line][column] = player
-        break
+    def make_a_move(self, column, player): 
+        '''This function places the move (i.e. symbol of a player) in a given column in the lowest available spot'''
+        for line in sorted(list(range(8)), reverse=True): #This for loop checks the lines starting from the bottom one and places the player sign the the lowest  empty one
+            if line > 0:
+                if self.dict_moves[line][column] == ' ':
+                    self.dict_moves[line][column] = player
+                    break
+            else:
+                print('All the spaces in this column are full. Try another column') #If the loop reaches 8 it means the column is full
     
+    def printBoard(self):
+        self.dict_board = {'roof' : '_______________', #the dict board is updated with the new values
+        1 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[1].values())),
+        2 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[2].values())),
+        3 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[3].values())),
+        4 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[4].values())),
+        5 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[5].values())),
+        6 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[6].values())),
+        7 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[7].values())),
+        'bottom' : '¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯'}
+        for line in self.dict_board.keys(): #This for loop prints the dict_board line by line
+            print(self.dict_board[line])
 
-dict_board ={'roof' : '_______________', #the dict board is updated with the new values
-'line1' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line1'].values())),
-'line2' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line2'].values())),
-'line3' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line3'].values())),
-'line4' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line4'].values())),
-'line5' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line5'].values())),
-'line6' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line6'].values())),
-'line7' : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(dict_moves['line7'].values())),
-'bottom' : '¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯'}
+g = Board()
 
-for line in dict_board.keys(): #This for loop prints the dict_board line by line
-                print(dict_board[line])
+g.make_a_move(2, 'O')
+g.printBoard()
