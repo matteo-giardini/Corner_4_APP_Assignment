@@ -46,6 +46,8 @@ User Class:
 # SOFTWARE.
 
 
+#Imports
+import pandas as pd
 
 
 class Board:
@@ -60,6 +62,35 @@ class Board:
         6: {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '},
         7: {1 : ' ', 2 : ' ', 3 : ' ', 4 : ' ', 5 : ' ', 6 : ' ', 7 : ' '}
         }
+
+
+
+
+    def check_line_win(self):
+
+        #Assumptions:
+        ##The board is 7x7
+        ##X and O are the only chip options
+
+        df = pd.DataFrame(data = board.dict_moves).transpose()
+        inv_dict = df.to_dict()
+
+        for iteration in board.dict_moves.keys():
+            #horizontal wins
+            line = board.dict_moves[iteration].values()
+            line_string = "".join(line)
+
+            #vertical wins
+            column = inv_dict[iteration].values()
+            column_string = "".join(column)
+
+
+            if (line_string.find("XXXX") >= 0 or column_string.find("XXXX") >= 0):
+                return "X wins"
+            if (line_string.find("OOOO") >= 0 or column_string.find("OOOO") >= 0):
+                return "O wins"
+
+
 
     def make_a_move(self, column, player): 
         '''This function places the move (i.e. symbol of a player) in a given column in the lowest available spot'''
@@ -97,13 +128,32 @@ class User:
         self.color = color
 
 
-
 if __name__ == "__main__":
+
+    #Testing for the checking_line_win function
+    board = Board()
+    board.make_a_move(1,"X")
+    board.make_a_move(2,"O")
+    board.make_a_move(2,"X")
+    board.make_a_move(3,"O")
+    board.make_a_move(3,"O")
+    board.make_a_move(3,"X")
+    board.make_a_move(4,"O")
+    board.make_a_move(4,"O")
+    board.make_a_move(4,"O")
+    board.make_a_move(4,"X")
+    board.make_a_move(5,"O")
+    board.printBoard()
+
+    board.check_line_win()
+
+
     is_game_over = False
     count_turns = 0
     while is_game_over == False:
         ### ask for user input
         count_turns +=1
+        is_game_over = True
         
 
 
