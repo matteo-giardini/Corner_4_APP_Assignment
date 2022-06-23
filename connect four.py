@@ -1,24 +1,29 @@
 ''' TO DO LIST:
 Board Class:
-- initialize board with row and column
-- setup_board - ask user how many rows and columns to play with
-- make_board (if we do graphics, if we dont, let's draw it on the terminal)
-- update_board (maybe necessary (??), takes as input old board, new move and returns new board)
+- initialize board with row and column # not necessary
+- setup_board - ask user how many rows and columns to play with - Done
+- make_board - Done
+- print_board - Done
 
-- make_move
+
+- make_move - Matteo
 - valid_location + place to first available row
-- check_horizontal
-- check_vertical
-- check_pos_diag
-- check_neg_diag
+- check_horizontal - Patrick 
+- check_vertical - Patrick 
+- check_pos_diag - Patrick
+- check_neg_diag - Patrick
 - is_game_over - check if check functions above return True
+- restart_game - TO DO
 
 
-User Class:
-- initialize user (name, last_name, age, color (if we do graphics))
+User Class: - Philipp
+- initialize user (name, last_name, symbol) ### symbol either X or O
 - get_name
 - ask_input - returns column number
 - ...
+
+Score_Board Class: - Philipp
+- 
 
 '''
 
@@ -121,14 +126,13 @@ class Board:
 #g.printBoard()
 
 class User:
-    def __init__(self, fist_name, last_name, age, color):
+    def __init__(self, fist_name, last_name):
         self.fist_name = fist_name
         self.last_name = last_name
-        self.age = age
-        self.color = color
+        
 
 
-if __name__ == "__main__":
+if __name__ == "__main__": # Matteo Levin
 
     #Testing for the checking_line_win function
     board = Board()
