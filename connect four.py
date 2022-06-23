@@ -126,13 +126,50 @@ class Board:
 #g.printBoard()
 
 class User:
-    def __init__(self, fist_name, last_name):
-        self.fist_name = fist_name
+    '''User class that defines the names and symbols of user and contains the user functionalities'''
+    def __init__(self, first_name, last_name, symbol):
+        self.first_name = first_name
         self.last_name = last_name
+        self.symbol = symbol
+
+    @classmethod
+    def get_user_input(cls):
+        '''User information method that gets the input from users'''
         
+        return cls(str(input('Please enter your first name: ')),
+        str(input('Please enter your last name: ')),
+        str(input('Please enter your symbol (X or O): ')))
+        # To add in game functionality:
+        # -> if user1 picks "X" or "O" as their symbol, user2 automatically gets assigned the other symbol (can't add this in a class method)
+
+    
+    def ask_column(self):
+        '''Column function that gets the played column of the users'''
+
+        column = int(input("It's your turn {}. In which column do you want to place your stone? (1-7) ".format(self.first_name)))
+        return column    
 
 
-if __name__ == "__main__": # Matteo Levin
+
+if __name__ == "__main__": # Matteo G. and Levin
+
+    # Testing user class in other game and board classes
+    user1 = User.get_user_input()
+    print(user1.first_name)
+
+    user2 = User.get_user_input()
+    print(user2.first_name)
+
+    column1 = user1.ask_column()
+    print(column1)
+
+    column2 = user2.ask_column()
+    print(column2)
+
+    board = Board()
+    board.make_a_move(column1,user1.symbol)
+    board.make_a_move(column2,user2.symbol)
+    board.printBoard()
 
     #Testing for the checking_line_win function
     board = Board()
