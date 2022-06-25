@@ -97,9 +97,9 @@ class Board:
 
 
     #looking for diagonal wins
-    def check_diagonal_win(self):
-        for starter_line in board.dict_moves.keys():
-            for starter_column in board.dict_moves[starter_line].keys():
+    def check_diagonal_win(self): ### maybe it takes board as input
+        for starter_line in self.dict_moves.keys():
+            for starter_column in self.dict_moves[starter_line].keys():
 
                 #checking for downward diagonals
                 if (starter_line == 1 or starter_column == 1):         
@@ -109,7 +109,7 @@ class Board:
                     diagonal_string = ""
                     step = 0
                     while step < diagonal_length:
-                        diagonal_string += str(board.dict_moves[int(starter_line + step)][int(starter_column + step)])
+                        diagonal_string += str(self.dict_moves[int(starter_line + step)][int(starter_column + step)])
                         step += 1
                     #print("Diagonal string for starter line {} and starter column {}: {}".format(starter_line, starter_column, diagonal_string))
                     if diagonal_string.find("XXXX") >= 0:
@@ -125,7 +125,7 @@ class Board:
                     diagonal_string = ""
                     step = 0
                     while step < diagonal_length:
-                        diagonal_string += str(board.dict_moves[int(starter_line - step)][int(starter_column + step)])
+                        diagonal_string += str(self.dict_moves[int(starter_line - step)][int(starter_column + step)])
                         step += 1
 
                     #print("Diagonal string for starter line {} and starter column {}: {}".format(starter_line, starter_column, diagonal_string))
@@ -135,7 +135,18 @@ class Board:
                         print("O wins")
 
 
+    ### Make check_win function which puts together the two above
+    def check_win(self):
+        self.line = self.check_line_win()
+        self.diag = self.check_diagonal_win()
 
+        if self.line == "X wins" or self.diag == "X wins":
+            return "X wins"
+        elif self.line == "O wins" or self.diag == "O wins":
+            return "O wins"
+        else:
+            pass
+            
 
 
     def make_a_move(self, column, player): 
@@ -148,6 +159,7 @@ class Board:
             else:
                 return('All the spaces in this column are full. Try another column') #If the loop reaches 8 it means the column is full
     
+
     def printBoard(self):
         self.dict_board = {'roof' : '_______________', #the dict board is updated with the new values
         1 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[1].values())),
@@ -161,10 +173,6 @@ class Board:
         for line in self.dict_board.keys(): #This for loop prints the dict_board line by line
             print(self.dict_board[line])
 
-#g = Board()
-
-#g.make_a_move(2, 'O')
-#g.printBoard()
 
 class User:
     '''User class that defines the names and symbols of user and contains the user functionalities'''
@@ -226,20 +234,20 @@ class Game:
                     player += 1
             elif player == 2:
                 self.choose_move(self.user_2)
-                result = self.board.check_line_win()
+                self.result = self.check_result() ## Edit made here 
                 if win == True:
                     self.end_game(self.user_2.first_name)
                 else:
                     player -= 1
     
-    
+
     
     def choose_move(self, player):
         self.board.printBoard()
         print("_________________________________")
         print(player.first_name + ", it's your turn!")
         print("---------------------------------")
-        column = int(input('Please enter column: '))
+        column = int(input('Please enter column (1 to 7): '))
         print("---------------------------------")
         move = self.board.make_a_move(column, player.symbol)
 
@@ -250,7 +258,7 @@ class Game:
                       
             
     def check_result(self):
-        result = self.board.check_line_win()
+        result = self.board.check_win()
         if result == "X wins":
             print(self.board.printBoard())
             return(True)
@@ -267,9 +275,9 @@ class Game:
         
 
 if __name__ == "__main__": 
-    # Matteo G. and Levin
     Game().lets_play()
 
+'''
     # Testing user class in other game and board classes
     user1 = User.get_user_input()
     print(user1.first_name)
@@ -303,22 +311,4 @@ if __name__ == "__main__":
     board.make_a_move(5,"O")
     board.printBoard()
 
-    board.check_diagonal_win()
-
-
-    is_game_over = False
-    count_turns = 0
-    while is_game_over == False:
-        ### ask for user input
-        count_turns +=1
-        is_game_over = True
-        
-
-
-    while is_game_over == False:
-        ### Game dynamics 
-        count_turns +=1
-        
-        # remove below
-        if count_turns == 5:
-            is_game_over = True
+    board.check_diagonal_win()'''
