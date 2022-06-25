@@ -147,11 +147,85 @@ class User:
         '''Column function that gets the played column of the users'''
 
         column = int(input("It's your turn {}. In which column do you want to place your stone? (1-7) ".format(self.first_name)))
-        return column    
+        return column   
 
+class Game:
+    def __init__(self):
+        self.board = Board()
+        
+        print("Player 1 Information:")
+        first_name_1 = str(input('Please enter your first name: '))
+        last_name_1 = str(input('Please enter your last name: '))
+        symbol_1 = str(input('Please enter your symbol (X or O): '))
+        self.user_1 = User(first_name_1, last_name_1, symbol_1)
+        
+        print("Player 2 Information:")
+        first_name_2 = str(input('Please enter your first name: '))
+        last_name_2 = str(input('Please enter your last name: '))
+        
+        if symbol_1 == "X":
+            symbol_2 = "O"
+        else: 
+            symbol_2 = "X"
+        
+        self.user_2 = User(first_name_2, last_name_2, symbol_2)
+        
+    
+    def lets_play(self):
+        win = False
+        player = 1
 
+        while win == False:
+            if player == 1:
+                self.choose_move(self.user_1)
+                win = self.check_result()
+                if win == True:
+                    self.end_game(self.user_1.first_name)
+                else:
+                    player += 1
+            elif player == 2:
+                self.choose_move(self.user_2)
+                result = self.board.check_line_win()
+                if win == True:
+                    self.end_game(self.user_2.first_name)
+                else:
+                    player -= 1
+    
+    
+    
+    def choose_move(self, player):
+        self.board.printBoard()
+        print("_________________________________")
+        print(player.first_name + ", it's your turn!")
+        print("---------------------------------")
+        column = int(input('Please enter column: '))
+        print("---------------------------------")
+        move = self.board.make_a_move(column, player.symbol)
 
-if __name__ == "__main__": # Matteo G. and Levin
+        while move == 'All the spaces in this column are full. Try another column':
+            print(move)
+            column = int(input('Please enter column: '))
+            move = self.board.make_a_move(column, player.symbol)
+                      
+            
+    def check_result(self):
+        result = self.board.check_line_win()
+        if result == "X wins":
+            return(True)
+        elif result == "O wins":
+            return(True)
+        else:
+            return(False)
+        
+            
+    def end_game(self, player_name):
+        print("Game over!")
+        print(player_name + " has won the game!") 
+        
+
+if __name__ == "__main__": 
+    # Matteo G. and Levin
+    Game().lets_play()
 
     # Testing user class in other game and board classes
     user1 = User.get_user_input()
