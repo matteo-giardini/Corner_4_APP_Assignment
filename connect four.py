@@ -91,6 +91,47 @@ class Board:
                 return "O wins"
 
 
+    #looking for diagonal wins
+    def check_diagonal_win(self):
+        for starter_line in board.dict_moves.keys():
+            for starter_column in board.dict_moves[starter_line].keys():
+
+                #checking for downward diagonals
+                if (starter_line == 1 or starter_column == 1):         
+                    corner_distance = starter_line + starter_column #indicates how close the starting point is to top left corner of game board
+
+                    diagonal_length = 9 - corner_distance
+                    diagonal_string = ""
+                    step = 0
+                    while step < diagonal_length:
+                        diagonal_string += str(board.dict_moves[int(starter_line + step)][int(starter_column + step)])
+                        step += 1
+                    #print("Diagonal string for starter line {} and starter column {}: {}".format(starter_line, starter_column, diagonal_string))
+                    if diagonal_string.find("XXXX") >= 0:
+                        print("X wins")
+                    if diagonal_string.find("OOOO") >= 0:
+                        print("O wins")
+
+                #checking for upward diagonals
+                if (starter_line == 7 or starter_column == 1):         
+                    corner_distance = (8 - starter_line) + starter_column #indicates how close the starting point is to bottom left corner of game board
+
+                    diagonal_length = 9 - corner_distance
+                    diagonal_string = ""
+                    step = 0
+                    while step < diagonal_length:
+                        diagonal_string += str(board.dict_moves[int(starter_line - step)][int(starter_column + step)])
+                        step += 1
+
+                    #print("Diagonal string for starter line {} and starter column {}: {}".format(starter_line, starter_column, diagonal_string))
+                    if diagonal_string.find("XXXX") >= 0:
+                        print("X wins")
+                    if diagonal_string.find("OOOO") >= 0:
+                        print("O wins")
+
+
+
+
 
     def make_a_move(self, column, player): 
         '''This function places the move (i.e. symbol of a player) in a given column in the lowest available spot'''
@@ -145,7 +186,7 @@ if __name__ == "__main__":
     board.make_a_move(5,"O")
     board.printBoard()
 
-    board.check_line_win()
+    board.check_diagonal_win()
 
 
     is_game_over = False
