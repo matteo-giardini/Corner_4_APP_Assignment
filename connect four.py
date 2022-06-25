@@ -134,7 +134,7 @@ class User:
     '''
     @classmethod
     def get_user_input(cls):
-        '''User information method that gets the input from users'''
+        #User information method that gets the input from users
         
         return cls(str(input('Please enter your first name: ')),
         str(input('Please enter your last name: ')),
@@ -211,8 +211,10 @@ class Game:
     def check_result(self):
         result = self.board.check_line_win()
         if result == "X wins":
+            print(self.board.printBoard())
             return(True)
         elif result == "O wins":
+            print(self.board.printBoard())
             return(True)
         else:
             return(False)
