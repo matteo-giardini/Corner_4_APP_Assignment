@@ -1,24 +1,29 @@
 ''' TO DO LIST:
 Board Class:
-- initialize board with row and column
-- setup_board - ask user how many rows and columns to play with
-- make_board (if we do graphics, if we dont, let's draw it on the terminal)
-- update_board (maybe necessary (??), takes as input old board, new move and returns new board)
+- initialize board with row and column # not necessary
+- setup_board - ask user how many rows and columns to play with - Done
+- make_board - Done
+- print_board - Done
 
-- make_move
+
+- make_move - Matteo
 - valid_location + place to first available row
-- check_horizontal
-- check_vertical
-- check_pos_diag
-- check_neg_diag
+- check_horizontal - Patrick 
+- check_vertical - Patrick 
+- check_pos_diag - Patrick
+- check_neg_diag - Patrick
 - is_game_over - check if check functions above return True
+- restart_game - TO DO
 
 
-User Class:
-- initialize user (name, last_name, age, color (if we do graphics))
+User Class: - Philipp
+- initialize user (name, last_name, symbol) ### symbol either X or O
 - get_name
 - ask_input - returns column number
 - ...
+
+Score_Board Class: - Philipp
+- 
 
 '''
 
@@ -72,12 +77,12 @@ class Board:
         ##The board is 7x7
         ##X and O are the only chip options
 
-        df = pd.DataFrame(data = board.dict_moves).transpose()
+        df = pd.DataFrame(data = self.dict_moves).transpose()
         inv_dict = df.to_dict()
 
-        for iteration in board.dict_moves.keys():
+        for iteration in self.dict_moves.keys():
             #horizontal wins
-            line = board.dict_moves[iteration].values()
+            line = self.dict_moves[iteration].values()
             line_string = "".join(line)
 
             #vertical wins
@@ -141,7 +146,7 @@ class Board:
                     self.dict_moves[line][column] = player
                     break
             else:
-                print('All the spaces in this column are full. Try another column') #If the loop reaches 8 it means the column is full
+                return('All the spaces in this column are full. Try another column') #If the loop reaches 8 it means the column is full
     
     def printBoard(self):
         self.dict_board = {'roof' : '_______________', #the dict board is updated with the new values
@@ -162,14 +167,126 @@ class Board:
 #g.printBoard()
 
 class User:
-    def __init__(self, fist_name, last_name, age, color):
-        self.fist_name = fist_name
+    '''User class that defines the names and symbols of user and contains the user functionalities'''
+    def __init__(self, first_name, last_name, symbol):
+        self.first_name = first_name
         self.last_name = last_name
-        self.age = age
-        self.color = color
+        self.symbol = symbol
+    '''
+    @classmethod
+    def get_user_input(cls):
+        #User information method that gets the input from users
+        
+        return cls(str(input('Please enter your first name: ')),
+        str(input('Please enter your last name: ')),
+        str(input('Please enter your symbol (X or O): ')))
+        # To add in game functionality:
+        # -> if user1 picks "X" or "O" as their symbol, user2 automatically gets assigned the other symbol (can't add this in a class method)
+    '''
+    
+    def ask_column(self):
+        '''Column function that gets the played column of the users'''
 
+        column = int(input("It's your turn {}. In which column do you want to place your stone? (1-7) ".format(self.first_name)))
+        return column   
 
-if __name__ == "__main__":
+class Game:
+    def __init__(self):
+        self.board = Board()
+        
+        print("Player 1 Information:")
+        first_name_1 = str(input('Please enter your first name: '))
+        last_name_1 = str(input('Please enter your last name: '))
+        symbol_1 = str(input('Please enter your symbol (X or O): '))
+        self.user_1 = User(first_name_1, last_name_1, symbol_1)
+        
+        print("Player 2 Information:")
+        first_name_2 = str(input('Please enter your first name: '))
+        last_name_2 = str(input('Please enter your last name: '))
+        
+        if symbol_1 == "X":
+            symbol_2 = "O"
+        else: 
+            symbol_2 = "X"
+        
+        self.user_2 = User(first_name_2, last_name_2, symbol_2)
+        
+    
+    def lets_play(self):
+        win = False
+        player = 1
+
+        while win == False:
+            if player == 1:
+                self.choose_move(self.user_1)
+                win = self.check_result()
+                if win == True:
+                    self.end_game(self.user_1.first_name)
+                else:
+                    player += 1
+            elif player == 2:
+                self.choose_move(self.user_2)
+                result = self.board.check_line_win()
+                if win == True:
+                    self.end_game(self.user_2.first_name)
+                else:
+                    player -= 1
+    
+    
+    
+    def choose_move(self, player):
+        self.board.printBoard()
+        print("_________________________________")
+        print(player.first_name + ", it's your turn!")
+        print("---------------------------------")
+        column = int(input('Please enter column: '))
+        print("---------------------------------")
+        move = self.board.make_a_move(column, player.symbol)
+
+        while move == 'All the spaces in this column are full. Try another column':
+            print(move)
+            column = int(input('Please enter column: '))
+            move = self.board.make_a_move(column, player.symbol)
+                      
+            
+    def check_result(self):
+        result = self.board.check_line_win()
+        if result == "X wins":
+            print(self.board.printBoard())
+            return(True)
+        elif result == "O wins":
+            print(self.board.printBoard())
+            return(True)
+        else:
+            return(False)
+        
+            
+    def end_game(self, player_name):
+        print("Game over!")
+        print(player_name + " has won the game!") 
+        
+
+if __name__ == "__main__": 
+    # Matteo G. and Levin
+    Game().lets_play()
+
+    # Testing user class in other game and board classes
+    user1 = User.get_user_input()
+    print(user1.first_name)
+
+    user2 = User.get_user_input()
+    print(user2.first_name)
+
+    column1 = user1.ask_column()
+    print(column1)
+
+    column2 = user2.ask_column()
+    print(column2)
+
+    board = Board()
+    board.make_a_move(column1,user1.symbol)
+    board.make_a_move(column2,user2.symbol)
+    board.printBoard()
 
     #Testing for the checking_line_win function
     board = Board()
