@@ -77,12 +77,12 @@ class Board:
         ##The board is 7x7
         ##X and O are the only chip options
 
-        df = pd.DataFrame(data = board.dict_moves).transpose()
+        df = pd.DataFrame(data = self.dict_moves).transpose()
         inv_dict = df.to_dict()
 
-        for iteration in board.dict_moves.keys():
+        for iteration in self.dict_moves.keys():
             #horizontal wins
-            line = board.dict_moves[iteration].values()
+            line = self.dict_moves[iteration].values()
             line_string = "".join(line)
 
             #vertical wins
@@ -105,7 +105,7 @@ class Board:
                     self.dict_moves[line][column] = player
                     break
             else:
-                print('All the spaces in this column are full. Try another column') #If the loop reaches 8 it means the column is full
+                return('All the spaces in this column are full. Try another column') #If the loop reaches 8 it means the column is full
     
     def printBoard(self):
         self.dict_board = {'roof' : '_______________', #the dict board is updated with the new values
@@ -131,7 +131,7 @@ class User:
         self.first_name = first_name
         self.last_name = last_name
         self.symbol = symbol
-
+    '''
     @classmethod
     def get_user_input(cls):
         '''User information method that gets the input from users'''
@@ -141,7 +141,7 @@ class User:
         str(input('Please enter your symbol (X or O): ')))
         # To add in game functionality:
         # -> if user1 picks "X" or "O" as their symbol, user2 automatically gets assigned the other symbol (can't add this in a class method)
-
+    '''
     
     def ask_column(self):
         '''Column function that gets the played column of the users'''
