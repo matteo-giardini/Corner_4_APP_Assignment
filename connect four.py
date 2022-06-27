@@ -72,6 +72,9 @@ class Board:
 
 
     def check_line_win(self):
+        ''' Method to check whether one of the players has successfully put 4 chips next to each other horizontally or vertically
+        Returns a string of "O wins" or "X wins" or nothing if noone has one yet
+        '''
 
         #Assumptions:
         ##The board is 7x7
@@ -97,38 +100,42 @@ class Board:
 
 
     #looking for diagonal wins
-    def check_diagonal_win(self): ### maybe it takes board as input
+    def check_diagonal_win(self): 
+        ''' Method to check whether one of the players has successfully put 4 chips next to each other diagonally
+        Returns a string of "O wins" or "X wins" or nothing if noone has one yet
+        '''
         for starter_line in self.dict_moves.keys():
             for starter_column in self.dict_moves[starter_line].keys():
 
-                #checking for downward diagonals
-                if (starter_line == 1 or starter_column == 1):         
+                #checking for downward diagonals (e.g. top left to bottom right): 
+                #We construct the diagonals by adding the values of the diagonal together starting from the top left
+                if (starter_line == 1 or starter_column == 1): #Making sure we only start at the top-left of any diagonal  
                     corner_distance = starter_line + starter_column #indicates how close the starting point is to top left corner of game board
 
-                    diagonal_length = 9 - corner_distance
-                    diagonal_string = ""
+                    diagonal_length = 9 - corner_distance #the closer a starting point is to the top left corner of the board the longer the diagonal
+                    diagonal_string = "" #string to which we add the values on the diagonal
                     step = 0
-                    while step < diagonal_length:
+                    while step < diagonal_length: #we iterate as many times as the given diagonal is long
                         diagonal_string += str(self.dict_moves[int(starter_line + step)][int(starter_column + step)])
                         step += 1
-                    #print("Diagonal string for starter line {} and starter column {}: {}".format(starter_line, starter_column, diagonal_string))
+                    
                     if diagonal_string.find("XXXX") >= 0:
                         return "X wins"
                     if diagonal_string.find("OOOO") >= 0:
                         return "O wins"
 
-                #checking for upward diagonals
-                if (starter_line == 7 or starter_column == 1):         
+                #checking for upward diagonals (e.g. bottom left to top right)
+                #We construct the diagonals by adding the values of the diagonal together starting from the bottom left
+                if (starter_line == 7 or starter_column == 1): #Making sure we only start at the bottom-left of any diagonal
                     corner_distance = (8 - starter_line) + starter_column #indicates how close the starting point is to bottom left corner of game board
 
-                    diagonal_length = 9 - corner_distance
-                    diagonal_string = ""
+                    diagonal_length = 9 - corner_distance #the closer a starting point is to the bottom left corner of the board the longer the diagonal
+                    diagonal_string = "" #string to which we add the values on the diagonal
                     step = 0
-                    while step < diagonal_length:
+                    while step < diagonal_length: #we iterate as many times as the given diagonal is long
                         diagonal_string += str(self.dict_moves[int(starter_line - step)][int(starter_column + step)])
                         step += 1
 
-                    #print("Diagonal string for starter line {} and starter column {}: {}".format(starter_line, starter_column, diagonal_string))
                     if diagonal_string.find("XXXX") >= 0:
                         return "X wins"
                     if diagonal_string.find("OOOO") >= 0:
