@@ -75,7 +75,6 @@ class Board:
         ''' Method to check whether one of the players has successfully put 4 chips next to each other horizontally or vertically
         Returns a string of "O wins" or "X wins" or nothing if noone has one yet
         '''
-
         #Assumptions:
         ##The board is 7x7
         ##X and O are the only chip options
@@ -287,11 +286,15 @@ class Game:
         print("---------------------------------")
         column = int(input('Please enter column (1 to 7): '))
         print("---------------------------------")
+        
+        while not(1 <= column < 8):
+            column = int(input('Invalid number. Please enter a number between 1 and 7: '))
+        
         move = self.board.make_a_move(column, player.symbol)
 
         while move == 'All the spaces in this column are full. Try another column':
             print(move)
-            column = int(input('Please enter column: '))
+            column = int(input('Please enter column (1 to 7): '))
             move = self.board.make_a_move(column, player.symbol)
                       
             
@@ -327,6 +330,10 @@ class Game:
 
         # Ask user whether they would like to play again
         answer = str(input('Would you like to continue the session? (y or n): '))
+
+        while answer != 'y' or answer != 'n':
+            answer = str(input('Would you like to continue the session? (y or n): '))
+
         if answer == 'y':
                 self.board = Board()
                 self.lets_play()
