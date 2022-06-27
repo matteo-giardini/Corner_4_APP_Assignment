@@ -206,6 +206,8 @@ class Game:
         first_name_1 = str(input('Please enter your first name: '))
         last_name_1 = str(input('Please enter your last name: '))
         symbol_1 = str(input('Please enter your symbol (X or O): '))
+        while symbol_1 != 'X' and symbol_1 != 'O':
+            symbol_1 = str(input('This is not a valid symbol. Please enter your symbol (X or O): '))
         self.user_1 = User(first_name_1, last_name_1, symbol_1)
         
         print("Player 2 Information:")
