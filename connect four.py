@@ -142,8 +142,9 @@ class Board:
                         return "O wins"
 
 
-    ### Make check_win function which puts together the two above
     def check_win(self):
+        ''' Functions that puts together all functions above and checks for an horizontal or a diagonal win '''
+        
         self.line = self.check_line_win()
         self.diag = self.check_diagonal_win()
 
@@ -206,7 +207,17 @@ class User:
         return column   
 
 class Game:
+    ''' Game class were the user is prompted for information about the players and the symbol (X or O) is chosen.
+        The class includes the following functions:
+        - lets_play
+        - choose_move
+        - check_results
+        - end_game
+        - session_scoreboard
+        All function are used within the lets_play() function which is the only one that has to be called for the game to work.'''
+
     def __init__(self):
+        ''' Initiate Game class by asking user for players' information such as first name, last name and symbol to play with '''
         self.board = Board()
         
         print("Player 1 Information:")
@@ -233,6 +244,9 @@ class Game:
         
     
     def lets_play(self):
+        ''' Omnicomprehensive function that until the game is not won, it allows players to choose their move, checks whether the last move brings them to a win,
+            ends the game if this is true, otherwise it lets the other player choose their move, until the game is won by one of the two players '''
+        
         win = False
         player = 1
 
@@ -254,6 +268,8 @@ class Game:
             
 
     def choose_move(self, player):
+        ''' Function that prints the updated board and asks the user to choose a column between 1 and 7'''
+
         self.board.printBoard()
         print("_________________________________")
         print(player.first_name + ", it's your turn!")
@@ -269,6 +285,9 @@ class Game:
                       
             
     def check_result(self):
+        ''' Function that, for each move, calls the check_win function defined in the Board class and assesses whether this function has returned
+            "X wins" or "O wins" and returns True in case the game has been won by one of the players '''
+
         result = self.board.check_win()
         if result == "X wins":
             self.board.printBoard()
@@ -281,6 +300,9 @@ class Game:
         
             
     def end_game(self, player_name):
+        ''' Function that is called once the game is over and takes as input the player_name of the winning player. 
+        This function also calls the session_scoreboard function which and asks the user if they wish to continue playing. '''
+
         print("Game over!")
         print(player_name + " has won the game!")
 
@@ -303,6 +325,8 @@ class Game:
                 print(f"{self.user_2.first_name} has won this session with a total of {self.player2_wins} wins")
     
     def session_scoreboard(self):
+        ''' Function to display the scoreboard for the current session, showing how many games each player had won, and the total games played. '''
+
         print("___________________________________________")
         print(f"Session Scoreboard - {self.user_1.first_name} vs. {self.user_2.first_name}")
         print("___________________________________________")
