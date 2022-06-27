@@ -234,7 +234,7 @@ class Game:
                     player += 1
             elif player == 2:
                 self.choose_move(self.user_2)
-                self.result = self.check_result() ## Edit made here 
+                win = self.check_result() ## Edit made here 
                 if win == True:
                     self.end_game(self.user_2.first_name)
                 else:
