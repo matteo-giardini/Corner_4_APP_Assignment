@@ -144,7 +144,7 @@ class Board:
 
     def check_win(self):
         ''' Functions that puts together all functions above and checks for an horizontal or a diagonal win '''
-        
+
         self.line = self.check_line_win()
         self.diag = self.check_diagonal_win()
 
@@ -169,6 +169,8 @@ class Board:
     
 
     def printBoard(self):
+        ''' Function that displays the updated board with all moves '''
+
         self.dict_board = {'roof' : '_______________', #the dict board is updated with the new values
         1 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[1].values())),
         2 : '|{}|{}|{}|{}|{}|{}|{}|'.format(*list(self.dict_moves[2].values())),
@@ -206,6 +208,8 @@ class User:
         column = int(input("It's your turn {}. In which column do you want to place your stone? (1-7) ".format(self.first_name)))
         return column   
 
+
+
 class Game:
     ''' Game class were the user is prompted for information about the players and the symbol (X or O) is chosen.
         The class includes the following functions:
@@ -224,6 +228,8 @@ class Game:
         first_name_1 = str(input('Please enter your first name: '))
         last_name_1 = str(input('Please enter your last name: '))
         symbol_1 = str(input('Please enter your symbol (X or O): '))
+        
+        # Make sure the input symbol is X or O
         while symbol_1 != 'X' and symbol_1 != 'O':
             symbol_1 = str(input('This is not a valid symbol. Please enter your symbol (X or O): '))
         self.user_1 = User(first_name_1, last_name_1, symbol_1)
@@ -250,16 +256,21 @@ class Game:
         win = False
         player = 1
 
+        # Until the function check_result() does not return True
         while win == False:
+
+            # Let player 1 play
             if player == 1:
-                self.choose_move(self.user_1)
+                self.choose_move(self.user_1) # Let user 1 choose their move
                 win = self.check_result()
                 if win == True:
                     self.end_game(self.user_1.first_name)
                 else:
                     player += 1
+            
+            # If player 1 has not won the game yet, let player 1 play
             elif player == 2:
-                self.choose_move(self.user_2)
+                self.choose_move(self.user_2) # Let user 2 choose their move
                 win = self.check_result()
                 if win == True:
                     self.end_game(self.user_2.first_name)
@@ -288,7 +299,7 @@ class Game:
         ''' Function that, for each move, calls the check_win function defined in the Board class and assesses whether this function has returned
             "X wins" or "O wins" and returns True in case the game has been won by one of the players '''
 
-        result = self.board.check_win()
+        result = self.board.check_win() 
         if result == "X wins":
             self.board.printBoard()
             return(True)
@@ -306,6 +317,7 @@ class Game:
         print("Game over!")
         print(player_name + " has won the game!")
 
+        # Count wins for each player
         if player_name == self.user_1.first_name:
             self.player1_wins += 1
         else:
@@ -313,6 +325,7 @@ class Game:
         
         self.session_scoreboard()
 
+        # Ask user whether they would like to play again
         answer = str(input('Would you like to continue the session? (y or n): '))
         if answer == 'y':
                 self.board = Board()
