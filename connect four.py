@@ -232,18 +232,19 @@ class Game:
                 win = self.check_result()
                 if win == True:
                     self.end_game(self.user_1.first_name)
+                    self.play_again() ### Edit
                 else:
                     player += 1
             elif player == 2:
                 self.choose_move(self.user_2)
-                win = self.check_result() ## Edit made here 
+                win = self.check_result()
                 if win == True:
                     self.end_game(self.user_2.first_name)
+                    self.play_again() ### Edit
                 else:
                     player -= 1
-    
+            
 
-    
     def choose_move(self, player):
         self.board.printBoard()
         print("_________________________________")
@@ -273,11 +274,25 @@ class Game:
             
     def end_game(self, player_name):
         print("Game over!")
-        print(player_name + " has won the game!") 
+        print(player_name + " has won the game!")
+
+
+    def play_again(self):
+        print('_____________________')
+        self.again = str(input('Would you like to play again? (Y/N): '))
+        if self.again == 'Y':
+            print("Let's start a new game!")
+            Game().lets_play()
+        elif self.again == 'N':
+            print('Thank you for playing!')
+
         
 
 if __name__ == "__main__": 
     Game().lets_play()
+
+
+
 
 '''
     # Testing user class in other game and board classes
