@@ -227,6 +227,9 @@ class Game:
             symbol_2 = "X"
         
         self.user_2 = User(first_name_2, last_name_2, symbol_2)
+
+        self.player1_wins = 0
+        self.player2_wins = 0
         
     
     def lets_play(self):
@@ -239,7 +242,6 @@ class Game:
                 win = self.check_result()
                 if win == True:
                     self.end_game(self.user_1.first_name)
-                    self.play_again() ### Edit
                 else:
                     player += 1
             elif player == 2:
@@ -247,7 +249,6 @@ class Game:
                 win = self.check_result()
                 if win == True:
                     self.end_game(self.user_2.first_name)
-                    self.play_again() ### Edit
                 else:
                     player -= 1
             
@@ -283,15 +284,35 @@ class Game:
         print("Game over!")
         print(player_name + " has won the game!")
 
+        if player_name == self.user_1.first_name:
+            self.player1_wins += 1
+        else:
+            self.player2_wins += 1
+        
+        self.session_scoreboard()
 
-    def play_again(self):
-        print('_____________________')
-        self.again = str(input('Would you like to play again? (Y/N): '))
-        if self.again == 'Y':
-            print("Let's start a new game!")
-            Game().lets_play()
-        elif self.again == 'N':
-            print('Thank you for playing!')
+        answer = str(input('Would you like to continue the session? (y or n): '))
+        if answer == 'y':
+                self.board = Board()
+                self.lets_play()
+        else:
+            print("Game over!")
+            if self.player1_wins > self.player2_wins:
+                print(f"{self.user_1.first_name} has won this session with a total of {self.player1_wins} wins.")
+            if self.player2_wins > self.player1_wins:
+                print(f"{self.user_2.first_name} has won this session with a total of {self.player2_wins} wins")
+    
+    def session_scoreboard(self):
+        print("___________________________________________")
+        print(f"Session Scoreboard - {self.user_1.first_name} vs. {self.user_2.first_name}")
+        print("___________________________________________")
+        print("")
+        print(f"# of wins by {self.user_1.first_name}: {self.player1_wins}")
+        print(f"# of wins by {self.user_2.first_name}: {self.player2_wins}")
+        print("")
+        print(f"Total games played: {self.player1_wins + self.player2_wins}")
+        print("===========================================")
+        print("")
 
         
 
