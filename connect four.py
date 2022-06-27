@@ -113,9 +113,9 @@ class Board:
                         step += 1
                     #print("Diagonal string for starter line {} and starter column {}: {}".format(starter_line, starter_column, diagonal_string))
                     if diagonal_string.find("XXXX") >= 0:
-                        print("X wins")
+                        return "X wins"
                     if diagonal_string.find("OOOO") >= 0:
-                        print("O wins")
+                        return "O wins"
 
                 #checking for upward diagonals
                 if (starter_line == 7 or starter_column == 1):         
@@ -130,9 +130,9 @@ class Board:
 
                     #print("Diagonal string for starter line {} and starter column {}: {}".format(starter_line, starter_column, diagonal_string))
                     if diagonal_string.find("XXXX") >= 0:
-                        print("X wins")
+                        return "X wins"
                     if diagonal_string.find("OOOO") >= 0:
-                        print("O wins")
+                        return "O wins"
 
 
     ### Make check_win function which puts together the two above
@@ -262,10 +262,10 @@ class Game:
     def check_result(self):
         result = self.board.check_win()
         if result == "X wins":
-            print(self.board.printBoard())
+            self.board.printBoard()
             return(True)
         elif result == "O wins":
-            print(self.board.printBoard())
+            self.board.printBoard()
             return(True)
         else:
             return(False)
