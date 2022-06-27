@@ -119,9 +119,9 @@ class Board:
                         step += 1
                     
                     if diagonal_string.find("XXXX") >= 0:
-                        print("X wins")
+                        return "X wins"
                     if diagonal_string.find("OOOO") >= 0:
-                        print("O wins")
+                        return "O wins"
 
                 #checking for upward diagonals (e.g. bottom left to top right)
                 #We construct the diagonals by adding the values of the diagonal together starting from the bottom left
@@ -136,9 +136,9 @@ class Board:
                         step += 1
 
                     if diagonal_string.find("XXXX") >= 0:
-                        print("X wins")
+                        return "X wins"
                     if diagonal_string.find("OOOO") >= 0:
-                        print("O wins")
+                        return "O wins"
 
 
     ### Make check_win function which puts together the two above
@@ -212,6 +212,8 @@ class Game:
         first_name_1 = str(input('Please enter your first name: '))
         last_name_1 = str(input('Please enter your last name: '))
         symbol_1 = str(input('Please enter your symbol (X or O): '))
+        while symbol_1 != 'X' and symbol_1 != 'O':
+            symbol_1 = str(input('This is not a valid symbol. Please enter your symbol (X or O): '))
         self.user_1 = User(first_name_1, last_name_1, symbol_1)
         
         print("Player 2 Information:")
@@ -237,19 +239,19 @@ class Game:
                 win = self.check_result()
                 if win == True:
                     self.end_game(self.user_1.first_name)
+                    self.play_again() ### Edit
                 else:
                     player += 1
             elif player == 2:
                 self.choose_move(self.user_2)
-                print("move was logged now")
-                win = self.check_result() ## Edit made here 
+                win = self.check_result()
                 if win == True:
                     self.end_game(self.user_2.first_name)
+                    self.play_again() ### Edit
                 else:
                     player -= 1
-    
+            
 
-    
     def choose_move(self, player):
         self.board.printBoard()
         print("_________________________________")
@@ -279,11 +281,25 @@ class Game:
             
     def end_game(self, player_name):
         print("Game over!")
-        print(player_name + " has won the game!") 
+        print(player_name + " has won the game!")
+
+
+    def play_again(self):
+        print('_____________________')
+        self.again = str(input('Would you like to play again? (Y/N): '))
+        if self.again == 'Y':
+            print("Let's start a new game!")
+            Game().lets_play()
+        elif self.again == 'N':
+            print('Thank you for playing!')
+
         
 
 if __name__ == "__main__": 
     Game().lets_play()
+
+
+
 
 '''
     # Testing user class in other game and board classes
