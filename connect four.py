@@ -1,32 +1,3 @@
-''' TO DO LIST:
-Board Class:
-- initialize board with row and column # not necessary
-- setup_board - ask user how many rows and columns to play with - Done
-- make_board - Done
-- print_board - Done
-
-
-- make_move - Matteo
-- valid_location + place to first available row
-- check_horizontal - Patrick 
-- check_vertical - Patrick 
-- check_pos_diag - Patrick
-- check_neg_diag - Patrick
-- is_game_over - check if check functions above return True
-- restart_game - TO DO
-
-
-User Class: - Philipp
-- initialize user (name, last_name, symbol) ### symbol either X or O
-- get_name
-- ask_input - returns column number
-- ...
-
-Score_Board Class: - Philipp
-- 
-
-'''
-
 ### Connect_4_VF.py
 # MIT License
 # 
