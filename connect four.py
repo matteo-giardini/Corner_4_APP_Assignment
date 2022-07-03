@@ -299,21 +299,25 @@ class Game:
         
         self.session_scoreboard()
 
-        # Ask user whether they would like to play again
         answer = str(input('Would you like to continue the session? (y or n): '))
 
-        while answer != 'y' or answer != 'n':
-            answer = str(input('Would you like to continue the session? (y or n): '))
+        while answer != 'y' and answer != 'n':
+            answer = str(input('This is not a valid letter or format. Please enter a correct letter (y or n): '))
 
+        # Ask user whether they would like to play again
         if answer == 'y':
                 self.board = Board()
                 self.lets_play()
-        else:
+        
+        elif answer == "n":
             print("Game over!")
             if self.player1_wins > self.player2_wins:
                 print(f"{self.user_1.first_name} has won this session with a total of {self.player1_wins} wins.")
             if self.player2_wins > self.player1_wins:
                 print(f"{self.user_2.first_name} has won this session with a total of {self.player2_wins} wins")
+        
+        #else:
+        #    answer = str(input('Would you like to continue the session? (y or n): '))
     
     def session_scoreboard(self):
         ''' Function to display the scoreboard for the current session, showing how many games each player had won, and the total games played. '''
@@ -329,12 +333,8 @@ class Game:
         print("===========================================")
         print("")
 
-        
-
 if __name__ == "__main__": 
     Game().lets_play()
-
-
 
 
 '''
