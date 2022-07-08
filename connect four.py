@@ -336,39 +336,3 @@ class Game:
 if __name__ == "__main__": 
     Game().lets_play()
 
-
-'''
-    # Testing user class in other game and board classes
-    user1 = User.get_user_input()
-    print(user1.first_name)
-
-    user2 = User.get_user_input()
-    print(user2.first_name)
-
-    column1 = user1.ask_column()
-    print(column1)
-
-    column2 = user2.ask_column()
-    print(column2)
-
-    board = Board()
-    board.make_a_move(column1,user1.symbol)
-    board.make_a_move(column2,user2.symbol)
-    board.printBoard()
-
-    #Testing for the checking_line_win function
-    board = Board()
-    board.make_a_move(1,"X")
-    board.make_a_move(2,"O")
-    board.make_a_move(2,"X")
-    board.make_a_move(3,"O")
-    board.make_a_move(3,"O")
-    board.make_a_move(3,"X")
-    board.make_a_move(4,"O")
-    board.make_a_move(4,"O")
-    board.make_a_move(4,"O")
-    board.make_a_move(4,"X")
-    board.make_a_move(5,"O")
-    board.printBoard()
-
-    board.check_diagonal_win()'''
